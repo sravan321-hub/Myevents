@@ -12,10 +12,10 @@ const Sidebar1 = ()=> {
   console.log(open)
   
   return (
-  <div className='flex'>
+  <div className='flex border-[1px]'>
   
           <div className={`flex bg-sky-100  p-3 flex-col 
-           text-black h-screen  
+           text-black h-screen  border-r shadow-sm bg-white
           items-center gap-2 p-5 pt-8 ${
       open ? "w-72" : "w-20"
       } duration-300 relative`}
@@ -30,15 +30,15 @@ const Sidebar1 = ()=> {
                 onClick={() => setOpen(!open)} 
                 />
               
-              <div className='flex-1 py-8 flex flex-col gap-1 px-2  ${!open && "hidden"}' >
+              <div className='flex-1 py-8 flex flex-col gap-1 px-2  ' >
                 {DASHBOARD_SIDEBAR_LINKS.map((item) => (
-               <SidebarLink key={item.key} item={item} />
+               <SidebarLink key={item.key} item={item} open={open} />
                
                 ))}
               </div>
-              <div className='flex flex-col gap-1 pt-2 border-t border-neutral-700'>
+              <div className='flex flex-col gap-1 pt-2 border-t border-neutral-700 '>
                 {DASHBOARD_SIDEBAR_BOTTOM_LINKS.map(item => (
-                <SidebarLink key={item.key} item={item} />
+                <SidebarLink key={item.key} item={item} open={open}/>
                  ))}
               </div>
               
@@ -49,16 +49,19 @@ const Sidebar1 = ()=> {
 }
 
 
-function SidebarLink({item}) {
+function SidebarLink({item,open}) {
   const {pathname} = useLocation()
   return(
-
+    <div>
     <Link to={item.path} className={classNames(pathname == item.path ? 
     'bg-neutral-300 text-white': 'text-neutral-400',linkClasses )}>
     <span className="text-2xl text-black block gap-5 float-left flex ">{item.icon}</span>
-    <span className={`text-base text-black font-medium gap-5 flex
-              ${!open && "hidden"} `}>{item.label}</span>
+    
+    
+    {open && <span className={`text-base text-black font-medium  gap-5 flex `}
+    >{item.label}</span>}
     </Link>
+    </div>
   )
 }
 export default Sidebar1
